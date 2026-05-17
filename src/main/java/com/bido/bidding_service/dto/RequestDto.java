@@ -20,6 +20,5 @@ public record RequestDto(
         Instant createdAt,
         Instant expiresAt,
         RequestStatus status,
-        Long eventTypeId,
         Long clientId) {
 }

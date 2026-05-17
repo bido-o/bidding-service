@@ -21,7 +21,6 @@ public class RequestMapper {
         request.setWantsPackage(Boolean.TRUE.equals(dto.wantsPackage()));
         request.setDeliveryIncluded(dto.deliveryIncluded());
         request.setExpiresAt(dto.expiresAt());
-        request.setEventTypeId(dto.eventTypeId());
         request.setClientId(dto.clientId());
         return request;
     }
@@ -57,7 +56,6 @@ public class RequestMapper {
                 request.getCreatedAt(),
                 request.getExpiresAt(),
                 request.getStatus(),
-                request.getEventTypeId(),
                 request.getClientId());
     }
 }

@@ -65,9 +65,6 @@ public class Request {
     private RequestStatus status = RequestStatus.OPEN;
 
     @Column(nullable = false)
-    private Long eventTypeId;
-
-    @Column(nullable = false)
     private Long clientId;
 
     public Long getId() {
@@ -164,14 +161,6 @@ public class Request {
 
     public void setStatus(RequestStatus status) {
         this.status = status;
-    }
-
-    public Long getEventTypeId() {
-        return eventTypeId;
-    }
-
-    public void setEventTypeId(Long eventTypeId) {
-        this.eventTypeId = eventTypeId;
     }
 
     public Long getClientId() {

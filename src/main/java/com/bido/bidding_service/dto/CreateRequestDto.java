@@ -20,6 +20,5 @@ public record CreateRequestDto(
         Boolean wantsPackage,
         Boolean deliveryIncluded,
         Instant expiresAt,
-        @NotNull Long eventTypeId,
         @NotNull Long clientId) {
 }
