@@ -40,8 +40,10 @@ public class RequestController {
     public ResponseEntity<RequestDto> create(@Valid @RequestBody CreateRequestDto dto,
                                              UriComponentsBuilder uriBuilder,
                                              AuthContext auth) {
-        auth.requireAdminOrOwner(AuthContext.ROLE_CLIENT, dto.clientId());
-        Request created = requestService.create(dto);
+        if (!auth.isClient()) {
+            throw AuthContext.forbidden();
+        }
+        Request created = requestService.create(dto, auth.userId());
         RequestDto body = requestMapper.toDto(created);
         return ResponseEntity
                 .created(uriBuilder.path("/api/requests/{id}").buildAndExpand(created.getId()).toUri())

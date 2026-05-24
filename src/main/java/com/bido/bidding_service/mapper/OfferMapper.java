@@ -12,10 +12,10 @@ import java.math.BigDecimal;
 @Component
 public class OfferMapper {
 
-    public Offer toEntity(CreateOfferDto dto, Request request) {
+    public Offer toEntity(CreateOfferDto dto, Request request, Long supplierProfileId) {
         Offer offer = new Offer();
         offer.setRequest(request);
-        offer.setSupplierProfileId(dto.supplierProfileId());
+        offer.setSupplierProfileId(supplierProfileId);
         offer.setTotalPrice(dto.totalPrice());
         offer.setUpfrontPayment(dto.upfrontPayment() != null ? dto.upfrontPayment() : BigDecimal.ZERO);
         offer.setDescription(dto.description());

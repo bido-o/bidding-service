@@ -44,8 +44,10 @@ public class OfferController {
                                            @Valid @RequestBody CreateOfferDto dto,
                                            UriComponentsBuilder uriBuilder,
                                            AuthContext auth) {
-        auth.requireAdminOrOwner(AuthContext.ROLE_SUPPLIER, dto.supplierProfileId());
-        Offer offer = offerService.create(requestId, dto);
+        if (!auth.isSupplier()) {
+            throw AuthContext.forbidden();
+        }
+        Offer offer = offerService.create(requestId, dto, auth.userId());
         return ResponseEntity
                 .created(uriBuilder.path("/api/offers/{id}").buildAndExpand(offer.getId()).toUri())
                 .body(offerMapper.toDto(offer));

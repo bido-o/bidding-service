@@ -31,7 +31,7 @@ public class OfferService {
         this.offerMapper = offerMapper;
     }
 
-    public Offer create(Long requestId, CreateOfferDto dto) {
+    public Offer create(Long requestId, CreateOfferDto dto, Long supplierProfileId) {
         Request request = requestRepository.findById(requestId)
                 .orElseThrow(() -> new ResourceNotFoundException("Request", requestId));
         if (request.getStatus() != RequestStatus.OPEN) {
@@ -39,7 +39,7 @@ public class OfferService {
                     "Offers can only be created on requests with status OPEN (was %s)."
                             .formatted(request.getStatus()));
         }
-        Offer offer = offerMapper.toEntity(dto, request);
+        Offer offer = offerMapper.toEntity(dto, request, supplierProfileId);
         return offerRepository.save(offer);
     }
 

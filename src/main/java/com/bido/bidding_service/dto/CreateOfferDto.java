@@ -11,6 +11,5 @@ public record CreateOfferDto(
         @DecimalMin("0.00") BigDecimal upfrontPayment,
         String description,
         Boolean onlinePaymentAvailable,
-        @PositiveOrZero Integer creditsUsed,
-        @NotNull Long supplierProfileId) {
+        @PositiveOrZero Integer creditsUsed) {
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RequestMapper {
 
-    public Request toEntity(CreateRequestDto dto) {
+    public Request toEntity(CreateRequestDto dto, Long clientId) {
         Request request = new Request();
         request.setNrPersons(dto.nrPersons());
         request.setBudgetTotal(dto.budgetTotal());
@@ -21,7 +21,7 @@ public class RequestMapper {
         request.setWantsPackage(Boolean.TRUE.equals(dto.wantsPackage()));
         request.setDeliveryIncluded(dto.deliveryIncluded());
         request.setExpiresAt(dto.expiresAt());
-        request.setClientId(dto.clientId());
+        request.setClientId(clientId);
         return request;
     }
 

@@ -19,6 +19,5 @@ public record CreateRequestDto(
         String message,
         Boolean wantsPackage,
         Boolean deliveryIncluded,
-        Instant expiresAt,
-        @NotNull Long clientId) {
+        Instant expiresAt) {
 }
