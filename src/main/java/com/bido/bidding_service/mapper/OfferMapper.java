@@ -20,7 +20,6 @@ public class OfferMapper {
         offer.setUpfrontPayment(dto.upfrontPayment() != null ? dto.upfrontPayment() : BigDecimal.ZERO);
         offer.setDescription(dto.description());
         offer.setOnlinePaymentAvailable(dto.onlinePaymentAvailable());
-        offer.setCreditsUsed(dto.creditsUsed());
         return offer;
     }
 
@@ -32,7 +31,6 @@ public class OfferMapper {
             offer.setStatus(dto.status());
         }
         offer.setOnlinePaymentAvailable(dto.onlinePaymentAvailable());
-        offer.setCreditsUsed(dto.creditsUsed());
     }
 
     public OfferDto toDto(Offer offer) {
@@ -44,8 +42,8 @@ public class OfferMapper {
                 offer.getUpfrontPayment(),
                 offer.getDescription(),
                 offer.getStatus(),
-                offer.getOnlinePaymentAvailable(),
-                offer.getCreditsUsed(),
-                offer.getCreatedAt());
+                offer.isOnlinePaymentAvailable(),
+                offer.getCreatedAt(),
+                offer.getUpdatedAt());
     }
 }

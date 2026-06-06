@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -40,15 +41,16 @@ public class Offer {
     @Column(nullable = false)
     private OfferStatus status = OfferStatus.PENDING;
 
-    @Column
-    private Boolean onlinePaymentAvailable;
-
-    @Column
-    private Integer creditsUsed;
+    @Column(nullable = false)
+    private boolean onlinePaymentAvailable;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
+
+    @UpdateTimestamp
+    @Column(nullable = false)
+    private Instant updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "request_id", nullable = false)
@@ -93,24 +95,20 @@ public class Offer {
         this.status = status;
     }
 
-    public Boolean getOnlinePaymentAvailable() {
+    public boolean isOnlinePaymentAvailable() {
         return onlinePaymentAvailable;
     }
 
-    public void setOnlinePaymentAvailable(Boolean onlinePaymentAvailable) {
+    public void setOnlinePaymentAvailable(boolean onlinePaymentAvailable) {
         this.onlinePaymentAvailable = onlinePaymentAvailable;
-    }
-
-    public Integer getCreditsUsed() {
-        return creditsUsed;
-    }
-
-    public void setCreditsUsed(Integer creditsUsed) {
-        this.creditsUsed = creditsUsed;
     }
 
     public Instant getCreatedAt() {
         return createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
     }
 
     public Request getRequest() {

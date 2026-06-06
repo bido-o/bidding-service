@@ -13,7 +13,7 @@ public record OfferDto(
         BigDecimal upfrontPayment,
         String description,
         OfferStatus status,
-        Boolean onlinePaymentAvailable,
-        Integer creditsUsed,
-        Instant createdAt) {
+        boolean onlinePaymentAvailable,
+        Instant createdAt,
+        Instant updatedAt) {
 }
