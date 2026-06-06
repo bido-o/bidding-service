@@ -4,9 +4,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -47,10 +50,7 @@ public class Request {
     private String message;
 
     @Column(nullable = false)
-    private boolean wantsPackage;
-
-    @Column
-    private Boolean deliveryIncluded;
+    private boolean deliveryIncluded;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
@@ -66,6 +66,10 @@ public class Request {
 
     @Column(nullable = false)
     private Long clientId;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "event_type_id", nullable = false)
+    private EventType eventType;
 
     public Long getId() {
         return id;
@@ -127,19 +131,11 @@ public class Request {
         this.message = message;
     }
 
-    public boolean isWantsPackage() {
-        return wantsPackage;
-    }
-
-    public void setWantsPackage(boolean wantsPackage) {
-        this.wantsPackage = wantsPackage;
-    }
-
-    public Boolean getDeliveryIncluded() {
+    public boolean isDeliveryIncluded() {
         return deliveryIncluded;
     }
 
-    public void setDeliveryIncluded(Boolean deliveryIncluded) {
+    public void setDeliveryIncluded(boolean deliveryIncluded) {
         this.deliveryIncluded = deliveryIncluded;
     }
 
@@ -169,6 +165,14 @@ public class Request {
 
     public void setClientId(Long clientId) {
         this.clientId = clientId;
+    }
+
+    public EventType getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
     }
 
     @Override
