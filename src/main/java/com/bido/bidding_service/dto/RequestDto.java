@@ -15,10 +15,12 @@ public record RequestDto(
         LocationCity locationCity,
         String locationAddress,
         String message,
-        boolean wantsPackage,
-        Boolean deliveryIncluded,
+        boolean deliveryIncluded,
         Instant createdAt,
+        Instant updatedAt,
         Instant expiresAt,
         RequestStatus status,
-        Long clientId) {
+        Long clientId,
+        Long eventTypeId,
+        String eventTypeName) {
 }
