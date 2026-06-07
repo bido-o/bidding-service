@@ -8,7 +8,6 @@ import com.bido.bidding_service.model.EventType;
 import com.bido.bidding_service.enums.LocationCity;
 import com.bido.bidding_service.model.Request;
 import com.bido.bidding_service.enums.RequestStatus;
-import com.bido.bidding_service.repository.EventTypeRepository;
 import com.bido.bidding_service.repository.RequestRepository;
 import com.bido.bidding_service.repository.RequestSpecifications;
 import org.springframework.data.jpa.domain.Specification;
@@ -22,19 +21,19 @@ import java.util.List;
 public class RequestService {
 
     private final RequestRepository requestRepository;
-    private final EventTypeRepository eventTypeRepository;
+    private final EventTypeService eventTypeService;
     private final RequestMapper requestMapper;
 
     public RequestService(RequestRepository requestRepository,
-                          EventTypeRepository eventTypeRepository,
+                          EventTypeService eventTypeService,
                           RequestMapper requestMapper) {
         this.requestRepository = requestRepository;
-        this.eventTypeRepository = eventTypeRepository;
+        this.eventTypeService = eventTypeService;
         this.requestMapper = requestMapper;
     }
 
     public Request create(CreateRequestDto dto, Long clientId) {
-        EventType eventType = findEventType(dto.eventTypeId());
+        EventType eventType = eventTypeService.getById(dto.eventTypeId());
         Request request = requestMapper.toEntity(dto, clientId, eventType);
         return requestRepository.save(request);
     }
@@ -55,7 +54,7 @@ public class RequestService {
     }
 
     public Request update(Long id, UpdateRequestDto dto) {
-        EventType eventType = findEventType(dto.eventTypeId());
+        EventType eventType = eventTypeService.getById(dto.eventTypeId());
         Request request = requestRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Request", id));
         requestMapper.applyUpdate(request, dto, eventType);
@@ -67,10 +66,5 @@ public class RequestService {
             throw new ResourceNotFoundException("Request", id);
         }
         requestRepository.deleteById(id);
-    }
-
-    private EventType findEventType(Long eventTypeId) {
-        return eventTypeRepository.findById(eventTypeId)
-                .orElseThrow(() -> new ResourceNotFoundException("EventType", eventTypeId));
     }
 }
