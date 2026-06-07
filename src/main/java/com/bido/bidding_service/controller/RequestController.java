@@ -51,31 +51,22 @@ public class RequestController {
     }
 
     @GetMapping("/{id}")
-    public Object findById(@PathVariable Long id, AuthContext auth) {
+    public RequestDto findById(@PathVariable Long id, AuthContext auth) {
         Request request = requestService.findById(id);
-        // proprietarul cererii sau adminul → DTO complet (inclusiv clientId, adresă)
         if (auth.isAdmin() || (auth.isClient() && auth.isOwner(request.getClientId()))) {
             return requestMapper.toDto(request);
-        }
-        // furnizorul → proiecție publică (fără clientId / adresă exactă)
-        if (auth.isSupplier()) {
-            return requestMapper.toPublicDto(request);
         }
         throw AuthContext.forbidden();
     }
 
     @GetMapping
-    public List<?> findAll(
+    public List<RequestDto> findAll(
             @RequestParam(required = false) RequestStatus status,
             @RequestParam(required = false) Long clientId,
             @RequestParam(required = false) LocationCity locationCity,
             AuthContext auth) {
-        // furnizorul vede doar cereri OPEN, în proiecție publică
-        if (auth.isSupplier()) {
-            return requestService.findAll(RequestStatus.OPEN, clientId, locationCity)
-                    .stream().map(requestMapper::toPublicDto).toList(); //DE SCOS CLIENT ID PENTRU SUPPLIER
-        }
-        // clientul își vede doar propriile cereri; adminul le vede pe toate → DTO complet
+
+        // clientul își vede doar propriile cereri; adminul le vede pe toate
         if (auth.isClient()) {
             clientId = auth.userId();
         } else if (!auth.isAdmin()) {
