@@ -1,7 +1,7 @@
 package com.bido.bidding_service.service;
 
-import com.bido.bidding_service.dto.CreateOfferDto;
-import com.bido.bidding_service.dto.UpdateOfferDto;
+import com.bido.bidding_service.dto.offer.CreateOfferDto;
+import com.bido.bidding_service.dto.offer.UpdateOfferDto;
 import com.bido.bidding_service.exception.BusinessRuleException;
 import com.bido.bidding_service.exception.ResourceNotFoundException;
 import com.bido.bidding_service.mapper.OfferMapper;

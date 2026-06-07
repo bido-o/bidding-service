@@ -1,4 +1,4 @@
-package com.bido.bidding_service.dto;
+package com.bido.bidding_service.dto.eventtype;
 
 public record EventTypeDto(
         Long id,

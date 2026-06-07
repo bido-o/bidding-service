@@ -1,8 +1,8 @@
 package com.bido.bidding_service.controller;
 
-import com.bido.bidding_service.dto.CreateRequestDto;
-import com.bido.bidding_service.dto.RequestDto;
-import com.bido.bidding_service.dto.UpdateRequestDto;
+import com.bido.bidding_service.dto.request.CreateRequestDto;
+import com.bido.bidding_service.dto.request.RequestDto;
+import com.bido.bidding_service.dto.request.UpdateRequestDto;
 import com.bido.bidding_service.mapper.RequestMapper;
 import com.bido.bidding_service.enums.LocationCity;
 import com.bido.bidding_service.model.Request;

@@ -1,4 +1,4 @@
-package com.bido.bidding_service.dto;
+package com.bido.bidding_service.dto.offer;
 
 import com.bido.bidding_service.enums.OfferStatus;
 

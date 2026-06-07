@@ -1,6 +1,6 @@
 package com.bido.bidding_service.service;
 
-import com.bido.bidding_service.dto.EventTypeDto;
+import com.bido.bidding_service.dto.eventtype.EventTypeDto;
 import com.bido.bidding_service.exception.ResourceNotFoundException;
 import com.bido.bidding_service.model.EventType;
 import com.bido.bidding_service.repository.EventTypeRepository;

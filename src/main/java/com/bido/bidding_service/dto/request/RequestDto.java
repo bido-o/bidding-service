@@ -1,4 +1,4 @@
-package com.bido.bidding_service.dto;
+package com.bido.bidding_service.dto.request;
 
 import com.bido.bidding_service.enums.LocationCity;
 import com.bido.bidding_service.enums.RequestStatus;

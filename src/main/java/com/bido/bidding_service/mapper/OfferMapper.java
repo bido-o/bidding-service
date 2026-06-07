@@ -1,8 +1,8 @@
 package com.bido.bidding_service.mapper;
 
-import com.bido.bidding_service.dto.CreateOfferDto;
-import com.bido.bidding_service.dto.OfferDto;
-import com.bido.bidding_service.dto.UpdateOfferDto;
+import com.bido.bidding_service.dto.offer.CreateOfferDto;
+import com.bido.bidding_service.dto.offer.OfferDto;
+import com.bido.bidding_service.dto.offer.UpdateOfferDto;
 import com.bido.bidding_service.model.Offer;
 import com.bido.bidding_service.model.Request;
 import org.springframework.stereotype.Component;

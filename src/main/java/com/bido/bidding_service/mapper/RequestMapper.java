@@ -1,9 +1,9 @@
 package com.bido.bidding_service.mapper;
 
-import com.bido.bidding_service.dto.CreateRequestDto;
-import com.bido.bidding_service.dto.RequestDto;
-import com.bido.bidding_service.dto.RequestPublicDto;
-import com.bido.bidding_service.dto.UpdateRequestDto;
+import com.bido.bidding_service.dto.request.CreateRequestDto;
+import com.bido.bidding_service.dto.request.RequestDto;
+import com.bido.bidding_service.dto.request.RequestPublicDto;
+import com.bido.bidding_service.dto.request.UpdateRequestDto;
 import com.bido.bidding_service.model.EventType;
 import com.bido.bidding_service.model.Request;
 import org.springframework.stereotype.Component;
