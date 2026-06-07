@@ -2,40 +2,42 @@ package com.bido.bidding_service.mapper;
 
 import com.bido.bidding_service.dto.CreateRequestDto;
 import com.bido.bidding_service.dto.RequestDto;
+import com.bido.bidding_service.dto.RequestPublicDto;
 import com.bido.bidding_service.dto.UpdateRequestDto;
+import com.bido.bidding_service.model.EventType;
 import com.bido.bidding_service.model.Request;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RequestMapper {
 
-    public Request toEntity(CreateRequestDto dto, Long clientId) {
+    public Request toEntity(CreateRequestDto dto, Long clientId, EventType eventType) {
         Request request = new Request();
         request.setNrPersons(dto.nrPersons());
         request.setBudgetTotal(dto.budgetTotal());
-        request.setBudgetFlexible(Boolean.TRUE.equals(dto.budgetFlexible()));
+        request.setBudgetFlexible(dto.budgetFlexible());
         request.setEventDate(dto.eventDate());
         request.setLocationCity(dto.locationCity());
         request.setLocationAddress(dto.locationAddress());
         request.setMessage(dto.message());
-        request.setWantsPackage(Boolean.TRUE.equals(dto.wantsPackage()));
         request.setDeliveryIncluded(dto.deliveryIncluded());
         request.setExpiresAt(dto.expiresAt());
         request.setClientId(clientId);
+        request.setEventType(eventType);
         return request;
     }
 
-    public void applyUpdate(Request request, UpdateRequestDto dto) {
+    public void applyUpdate(Request request, UpdateRequestDto dto, EventType eventType) {
         request.setNrPersons(dto.nrPersons());
         request.setBudgetTotal(dto.budgetTotal());
-        request.setBudgetFlexible(Boolean.TRUE.equals(dto.budgetFlexible()));
+        request.setBudgetFlexible(dto.budgetFlexible());
         request.setEventDate(dto.eventDate());
         request.setLocationCity(dto.locationCity());
         request.setLocationAddress(dto.locationAddress());
         request.setMessage(dto.message());
-        request.setWantsPackage(Boolean.TRUE.equals(dto.wantsPackage()));
         request.setDeliveryIncluded(dto.deliveryIncluded());
         request.setExpiresAt(dto.expiresAt());
+        request.setEventType(eventType);
         if (dto.status() != null) {
             request.setStatus(dto.status());
         }
@@ -51,11 +53,30 @@ public class RequestMapper {
                 request.getLocationCity(),
                 request.getLocationAddress(),
                 request.getMessage(),
-                request.isWantsPackage(),
-                request.getDeliveryIncluded(),
+                request.isDeliveryIncluded(),
+                request.getCreatedAt(),
+                request.getUpdatedAt(),
+                request.getExpiresAt(),
+                request.getStatus(),
+                request.getClientId(),
+                request.getEventType().getId(),
+                request.getEventType().getName());
+    }
+
+    public RequestPublicDto toPublicDto(Request request) {
+        return new RequestPublicDto(
+                request.getId(),
+                request.getNrPersons(),
+                request.getBudgetTotal(),
+                request.isBudgetFlexible(),
+                request.getEventDate(),
+                request.getLocationCity(),
+                request.getMessage(),
+                request.isDeliveryIncluded(),
                 request.getCreatedAt(),
                 request.getExpiresAt(),
                 request.getStatus(),
-                request.getClientId());
+                request.getEventType().getId(),
+                request.getEventType().getName());
     }
 }

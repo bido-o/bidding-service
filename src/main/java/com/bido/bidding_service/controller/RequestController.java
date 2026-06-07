@@ -51,25 +51,32 @@ public class RequestController {
     }
 
     @GetMapping("/{id}")
-    public RequestDto findById(@PathVariable Long id, AuthContext auth) {
+    public Object findById(@PathVariable Long id, AuthContext auth) {
         Request request = requestService.findById(id);
-        if (!auth.isAdmin()
-                && !auth.isSupplier()
-                && !(auth.isClient() && auth.isOwner(request.getClientId()))) {
-            throw AuthContext.forbidden();
+        // proprietarul cererii sau adminul → DTO complet (inclusiv clientId, adresă)
+        if (auth.isAdmin() || (auth.isClient() && auth.isOwner(request.getClientId()))) {
+            return requestMapper.toDto(request);
         }
-        return requestMapper.toDto(request);
+        // furnizorul → proiecție publică (fără clientId / adresă exactă)
+        if (auth.isSupplier()) {
+            return requestMapper.toPublicDto(request);
+        }
+        throw AuthContext.forbidden();
     }
 
     @GetMapping
-    public List<RequestDto> findAll(
+    public List<?> findAll(
             @RequestParam(required = false) RequestStatus status,
             @RequestParam(required = false) Long clientId,
             @RequestParam(required = false) LocationCity locationCity,
             AuthContext auth) {
+        // furnizorul vede doar cereri OPEN, în proiecție publică
         if (auth.isSupplier()) {
-            status = RequestStatus.OPEN;
-        } else if (auth.isClient()) {
+            return requestService.findAll(RequestStatus.OPEN, clientId, locationCity)
+                    .stream().map(requestMapper::toPublicDto).toList(); //DE SCOS CLIENT ID PENTRU SUPPLIER
+        }
+        // clientul își vede doar propriile cereri; adminul le vede pe toate → DTO complet
+        if (auth.isClient()) {
             clientId = auth.userId();
         } else if (!auth.isAdmin()) {
             throw AuthContext.forbidden();
@@ -81,6 +88,7 @@ public class RequestController {
     @PutMapping("/{id}")
     public RequestDto update(@PathVariable Long id, @Valid @RequestBody UpdateRequestDto dto, AuthContext auth) {
         Request existing = requestService.findById(id);
+        //VERIFICARE CA STATUS != OPEN
         if (!auth.isAdmin() && !(auth.isClient() && auth.isOwner(existing.getClientId()))) {
             throw AuthContext.forbidden();
         }
