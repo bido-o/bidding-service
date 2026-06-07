@@ -1,7 +1,7 @@
 package com.bido.bidding_service.dto;
 
-import com.bido.bidding_service.model.LocationCity;
-import com.bido.bidding_service.model.RequestStatus;
+import com.bido.bidding_service.enums.LocationCity;
+import com.bido.bidding_service.enums.RequestStatus;
 
 import java.math.BigDecimal;
 import java.time.Instant;

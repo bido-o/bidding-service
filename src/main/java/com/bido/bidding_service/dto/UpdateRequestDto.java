@@ -1,7 +1,7 @@
 package com.bido.bidding_service.dto;
 
-import com.bido.bidding_service.model.LocationCity;
-import com.bido.bidding_service.model.RequestStatus;
+import com.bido.bidding_service.enums.LocationCity;
+import com.bido.bidding_service.enums.RequestStatus;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

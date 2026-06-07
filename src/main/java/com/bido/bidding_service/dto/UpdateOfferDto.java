@@ -1,6 +1,6 @@
 package com.bido.bidding_service.dto;
 
-import com.bido.bidding_service.model.OfferStatus;
+import com.bido.bidding_service.enums.OfferStatus;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

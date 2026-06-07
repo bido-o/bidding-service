@@ -7,7 +7,7 @@ import com.bido.bidding_service.exception.ResourceNotFoundException;
 import com.bido.bidding_service.mapper.OfferMapper;
 import com.bido.bidding_service.model.Offer;
 import com.bido.bidding_service.model.Request;
-import com.bido.bidding_service.model.RequestStatus;
+import com.bido.bidding_service.enums.RequestStatus;
 import com.bido.bidding_service.repository.OfferRepository;
 import com.bido.bidding_service.repository.RequestRepository;
 import org.springframework.stereotype.Service;

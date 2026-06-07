@@ -1,5 +1,6 @@
 package com.bido.bidding_service.model;
 
+import com.bido.bidding_service.enums.OfferStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

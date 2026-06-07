@@ -1,6 +1,6 @@
 package com.bido.bidding_service.dto;
 
-import com.bido.bidding_service.model.LocationCity;
+import com.bido.bidding_service.enums.LocationCity;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

@@ -1,4 +1,4 @@
-package com.bido.bidding_service.model;
+package com.bido.bidding_service.enums;
 
 public enum OfferStatus {
     PENDING,

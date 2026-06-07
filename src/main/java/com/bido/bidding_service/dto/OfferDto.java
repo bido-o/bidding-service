@@ -1,6 +1,6 @@
 package com.bido.bidding_service.dto;
 
-import com.bido.bidding_service.model.OfferStatus;
+import com.bido.bidding_service.enums.OfferStatus;
 
 import java.math.BigDecimal;
 import java.time.Instant;

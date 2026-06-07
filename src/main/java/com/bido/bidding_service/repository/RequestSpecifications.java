@@ -1,8 +1,8 @@
 package com.bido.bidding_service.repository;
 
-import com.bido.bidding_service.model.LocationCity;
+import com.bido.bidding_service.enums.LocationCity;
+import com.bido.bidding_service.enums.RequestStatus;
 import com.bido.bidding_service.model.Request;
-import com.bido.bidding_service.model.RequestStatus;
 import org.springframework.data.jpa.domain.Specification;
 
 public final class RequestSpecifications {

@@ -1,5 +1,7 @@
 package com.bido.bidding_service.model;
 
+import com.bido.bidding_service.enums.LocationCity;
+import com.bido.bidding_service.enums.RequestStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
