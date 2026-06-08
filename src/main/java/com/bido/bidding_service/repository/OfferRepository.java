@@ -8,4 +8,6 @@ import java.util.List;
 public interface OfferRepository extends JpaRepository<Offer, Long> {
 
     List<Offer> findAllByRequestId(Long requestId);
+
+    boolean existsByRequestId(Long requestId);
 }
