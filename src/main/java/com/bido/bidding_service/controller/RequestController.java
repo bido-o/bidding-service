@@ -1,6 +1,7 @@
 package com.bido.bidding_service.controller;
 
 import com.bido.bidding_service.dto.request.CreateRequestDto;
+import com.bido.bidding_service.dto.request.ExtendExpiryDto;
 import com.bido.bidding_service.dto.request.RequestDto;
 import com.bido.bidding_service.dto.request.UpdateRequestDto;
 import com.bido.bidding_service.mapper.RequestMapper;
@@ -53,10 +54,8 @@ public class RequestController {
     @GetMapping("/{id}")
     public RequestDto findById(@PathVariable Long id, AuthContext auth) {
         Request request = requestService.findById(id);
-        if (auth.isAdmin() || (auth.isClient() && auth.isOwner(request.getClientId()))) {
-            return requestMapper.toDto(request);
-        }
-        throw AuthContext.forbidden();
+        requireOwnerOrAdmin(request, auth);
+        return requestMapper.toDto(request);
     }
 
     @GetMapping
@@ -76,23 +75,41 @@ public class RequestController {
                 .stream().map(requestMapper::toDto).toList();
     }
 
+    //Editare cerere pana la prima ofertă primită
     @PutMapping("/{id}")
     public RequestDto update(@PathVariable Long id, @Valid @RequestBody UpdateRequestDto dto, AuthContext auth) {
         Request existing = requestService.findById(id);
-        //VERIFICARE CA STATUS != OPEN
-        if (!auth.isAdmin() && !(auth.isClient() && auth.isOwner(existing.getClientId()))) {
-            throw AuthContext.forbidden();
-        }
+        requireOwnerOrAdmin(existing, auth);
         return requestMapper.toDto(requestService.update(id, dto));
+    }
+
+    // Anularea propriei cereri de către client (OPEN → CANCELLED)
+    @PostMapping("/{id}/cancel")
+    public RequestDto cancel(@PathVariable Long id, AuthContext auth) {
+        Request existing = requestService.findById(id);
+        requireOwnerOrAdmin(existing, auth);
+        return requestMapper.toDto(requestService.cancel(id));
+    }
+
+    // Prelungirea termenului de trimis oferte pentru o cerere ({OPEN, EXPIRED} → OPEN).
+    @PostMapping("/{id}/extend-expiry")
+    public RequestDto extendExpiry(@PathVariable Long id, @Valid @RequestBody ExtendExpiryDto dto, AuthContext auth) {
+        Request existing = requestService.findById(id);
+        requireOwnerOrAdmin(existing, auth);
+        return requestMapper.toDto(requestService.extendExpiry(id, dto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id, AuthContext auth) {
         Request existing = requestService.findById(id);
-        if (!auth.isAdmin() && !(auth.isClient() && auth.isOwner(existing.getClientId()))) {
-            throw AuthContext.forbidden();
-        }
+        requireOwnerOrAdmin(existing, auth);
         requestService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    private void requireOwnerOrAdmin(Request request, AuthContext auth) {
+        if (!auth.isAdmin() && !(auth.isClient() && auth.isOwner(request.getClientId()))) {
+            throw AuthContext.forbidden();
+        }
     }
 }

@@ -38,9 +38,6 @@ public class RequestMapper {
         request.setDeliveryIncluded(dto.deliveryIncluded());
         request.setExpiresAt(dto.expiresAt());
         request.setEventType(eventType);
-        if (dto.status() != null) {
-            request.setStatus(dto.status());
-        }
     }
 
     public RequestDto toDto(Request request) {
