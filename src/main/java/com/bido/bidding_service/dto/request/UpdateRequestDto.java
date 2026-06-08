@@ -1,7 +1,6 @@
 package com.bido.bidding_service.dto.request;
 
 import com.bido.bidding_service.enums.LocationCity;
-import com.bido.bidding_service.enums.RequestStatus;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -11,7 +10,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 public record UpdateRequestDto(
-        @Positive Integer nrPersons,
+        @NotNull @Positive Integer nrPersons,
         @NotNull @Positive @Digits(integer = 10, fraction = 2) BigDecimal budgetTotal,
         boolean budgetFlexible,
         @NotNull Instant eventDate,
@@ -20,6 +19,5 @@ public record UpdateRequestDto(
         String message,
         boolean deliveryIncluded,
         Instant expiresAt,
-        @NotNull @Positive Long eventTypeId,
-        RequestStatus status) {
+        @NotNull @Positive Long eventTypeId) {
 }

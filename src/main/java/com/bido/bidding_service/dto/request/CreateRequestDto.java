@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 public record CreateRequestDto(
-        @Positive Integer nrPersons,
+        @NotNull @Positive Integer nrPersons,
         @NotNull @Positive @Digits(integer = 10, fraction = 2) BigDecimal budgetTotal,
         boolean budgetFlexible,
         @NotNull Instant eventDate,

@@ -29,7 +29,7 @@ public class Request {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private Integer nrPersons;
 
     @Column(nullable = false)
