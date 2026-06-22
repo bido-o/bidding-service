@@ -10,14 +10,17 @@ public final class RequestSpecifications {
     private RequestSpecifications() {}
 
     public static Specification<Request> hasStatus(RequestStatus status) {
-        return status == null ? null : (root, query, cb) -> cb.equal(root.get("status"), status);
+        return (root, query, cb) ->
+                status == null ? cb.conjunction() : cb.equal(root.get("status"), status);
     }
 
     public static Specification<Request> hasClientId(Long clientId) {
-        return clientId == null ? null : (root, query, cb) -> cb.equal(root.get("clientId"), clientId);
+        return (root, query, cb) ->
+                clientId == null ? cb.conjunction() : cb.equal(root.get("clientId"), clientId);
     }
 
     public static Specification<Request> hasCity(LocationCity city) {
-        return city == null ? null : (root, query, cb) -> cb.equal(root.get("locationCity"), city);
+        return (root, query, cb) ->
+                city == null ? cb.conjunction() : cb.equal(root.get("locationCity"), city);
     }
 }
