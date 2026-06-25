@@ -2,6 +2,7 @@ package com.bido.bidding_service.mapper;
 
 import com.bido.bidding_service.dto.offer.CreateOfferDto;
 import com.bido.bidding_service.dto.offer.OfferDto;
+import com.bido.bidding_service.dto.offer.SentOfferDto;
 import com.bido.bidding_service.dto.offer.UpdateOfferDto;
 import com.bido.bidding_service.model.Offer;
 import com.bido.bidding_service.model.Request;
@@ -45,5 +46,22 @@ public class OfferMapper {
                 offer.isOnlinePaymentAvailable(),
                 offer.getCreatedAt(),
                 offer.getUpdatedAt());
+    }
+
+    public SentOfferDto toSentDto(Offer offer) {
+        Request request = offer.getRequest();
+        return new SentOfferDto(
+                offer.getId(),
+                request.getId(),
+                offer.getSupplierProfileId(),
+                offer.getTotalPrice(),
+                offer.getUpfrontPayment(),
+                offer.getDescription(),
+                offer.getStatus(),
+                offer.isOnlinePaymentAvailable(),
+                offer.getCreatedAt(),
+                offer.getUpdatedAt(),
+                request.getEventType().getName(),
+                request.getMessage());
     }
 }

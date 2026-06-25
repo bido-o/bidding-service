@@ -2,6 +2,7 @@ package com.bido.bidding_service.controller;
 
 import com.bido.bidding_service.dto.offer.CreateOfferDto;
 import com.bido.bidding_service.dto.offer.OfferDto;
+import com.bido.bidding_service.dto.offer.SentOfferDto;
 import com.bido.bidding_service.dto.offer.UpdateOfferDto;
 import com.bido.bidding_service.mapper.OfferMapper;
 import com.bido.bidding_service.model.Offer;
@@ -66,14 +67,14 @@ public class OfferController {
                 .stream().map(offerMapper::toDto).toList();
     }
 
-    // Ofertele trimise de furnizorul curent.
+    // Ofertele trimise de furnizorul curent, îmbogățite cu context din cerere.
     @GetMapping("/offers/sent")
-    public List<OfferDto> findMine(AuthContext auth) {
+    public List<SentOfferDto> findMine(AuthContext auth) {
         if (!auth.isSupplier()) {
             throw AuthContext.forbidden();
         }
         return offerService.findBySupplierProfileId(auth.userId())
-                .stream().map(offerMapper::toDto).toList();
+                .stream().map(offerMapper::toSentDto).toList();
     }
 
     @GetMapping("/offers/{id}")
