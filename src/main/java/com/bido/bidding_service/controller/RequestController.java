@@ -3,6 +3,7 @@ package com.bido.bidding_service.controller;
 import com.bido.bidding_service.dto.request.CreateRequestDto;
 import com.bido.bidding_service.dto.request.ExtendExpiryDto;
 import com.bido.bidding_service.dto.request.RequestDto;
+import com.bido.bidding_service.dto.request.RequestPublicDto;
 import com.bido.bidding_service.dto.request.UpdateRequestDto;
 import com.bido.bidding_service.mapper.RequestMapper;
 import com.bido.bidding_service.enums.LocationCity;
@@ -73,6 +74,16 @@ public class RequestController {
         }
         return requestService.findAll(status, clientId, locationCity)
                 .stream().map(requestMapper::toDto).toList();
+    }
+
+    // Cererile deschise disponibile pentru furnizori (proiecție publică, fără date sensibile).
+    @GetMapping("/public")
+    public List<RequestPublicDto> findAvailable(@RequestParam(required = false) LocationCity locationCity, AuthContext auth) {
+        if (!auth.isSupplier() && !auth.isAdmin()) {
+            throw AuthContext.forbidden();
+        }
+        return requestService.findAll(RequestStatus.OPEN, null, locationCity)
+                .stream().map(requestMapper::toPublicDto).toList();
     }
 
     //Editare cerere pana la prima ofertă primită
