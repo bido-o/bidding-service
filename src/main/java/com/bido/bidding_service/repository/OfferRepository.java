@@ -9,5 +9,7 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 
     List<Offer> findAllByRequestId(Long requestId);
 
+    List<Offer> findAllBySupplierProfileId(Long supplierProfileId);
+
     boolean existsByRequestId(Long requestId);
 }

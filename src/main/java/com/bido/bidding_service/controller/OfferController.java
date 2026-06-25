@@ -66,6 +66,16 @@ public class OfferController {
                 .stream().map(offerMapper::toDto).toList();
     }
 
+    // Ofertele trimise de furnizorul curent.
+    @GetMapping("/offers/sent")
+    public List<OfferDto> findMine(AuthContext auth) {
+        if (!auth.isSupplier()) {
+            throw AuthContext.forbidden();
+        }
+        return offerService.findBySupplierProfileId(auth.userId())
+                .stream().map(offerMapper::toDto).toList();
+    }
+
     @GetMapping("/offers/{id}")
     public OfferDto findById(@PathVariable Long id, AuthContext auth) {
         Offer offer = offerService.findById(id);

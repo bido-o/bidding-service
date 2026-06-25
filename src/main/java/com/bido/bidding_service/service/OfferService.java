@@ -50,6 +50,11 @@ public class OfferService {
     }
 
     @Transactional(readOnly = true)
+    public List<Offer> findBySupplierProfileId(Long supplierProfileId) {
+        return offerRepository.findAllBySupplierProfileId(supplierProfileId);
+    }
+
+    @Transactional(readOnly = true)
     public List<Offer> findByRequestId(Long requestId) {
         if (!requestRepository.existsById(requestId)) {
             throw new ResourceNotFoundException("Request", requestId);
