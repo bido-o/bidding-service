@@ -55,7 +55,7 @@ public class RequestController {
     @GetMapping("/{id}")
     public RequestDto findById(@PathVariable Long id, AuthContext auth) {
         Request request = requestService.findById(id);
-        requireOwnerOrAdmin(request, auth);
+        auth.requireAdminOrOwner("CLIENT", request.getClientId());
         return requestMapper.toDto(request);
     }
 
@@ -90,7 +90,7 @@ public class RequestController {
     @PutMapping("/{id}")
     public RequestDto update(@PathVariable Long id, @Valid @RequestBody UpdateRequestDto dto, AuthContext auth) {
         Request existing = requestService.findById(id);
-        requireOwnerOrAdmin(existing, auth);
+        auth.requireAdminOrOwner("CLIENT", existing.getClientId());
         return requestMapper.toDto(requestService.update(id, dto));
     }
 
@@ -98,7 +98,7 @@ public class RequestController {
     @PostMapping("/{id}/cancel")
     public RequestDto cancel(@PathVariable Long id, AuthContext auth) {
         Request existing = requestService.findById(id);
-        requireOwnerOrAdmin(existing, auth);
+        auth.requireAdminOrOwner("CLIENT", existing.getClientId());
         return requestMapper.toDto(requestService.cancel(id));
     }
 
@@ -106,21 +106,15 @@ public class RequestController {
     @PostMapping("/{id}/extend-expiry")
     public RequestDto extendExpiry(@PathVariable Long id, @Valid @RequestBody ExtendExpiryDto dto, AuthContext auth) {
         Request existing = requestService.findById(id);
-        requireOwnerOrAdmin(existing, auth);
+        auth.requireAdminOrOwner("CLIENT", existing.getClientId());
         return requestMapper.toDto(requestService.extendExpiry(id, dto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id, AuthContext auth) {
         Request existing = requestService.findById(id);
-        requireOwnerOrAdmin(existing, auth);
+        auth.requireAdminOrOwner("CLIENT", existing.getClientId());
         requestService.delete(id);
         return ResponseEntity.noContent().build();
-    }
-
-    private void requireOwnerOrAdmin(Request request, AuthContext auth) {
-        if (!auth.isAdmin() && !(auth.isClient() && auth.isOwner(request.getClientId()))) {
-            throw AuthContext.forbidden();
-        }
     }
 }

@@ -89,18 +89,14 @@ public class OfferController {
     @PutMapping("/offers/{id}")
     public OfferDto update(@PathVariable Long id, @Valid @RequestBody UpdateOfferDto dto, AuthContext auth) {
         Offer existing = offerService.findById(id);
-        if (!auth.isAdmin() && !(auth.isSupplier() && auth.isOwner(existing.getSupplierProfileId()))) {
-            throw AuthContext.forbidden();
-        }
+        auth.requireAdminOrOwner("SUPPLIER", existing.getSupplierProfileId());
         return offerMapper.toDto(offerService.update(id, dto));
     }
 
     @DeleteMapping("/offers/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id, AuthContext auth) {
         Offer existing = offerService.findById(id);
-        if (!auth.isAdmin() && !(auth.isSupplier() && auth.isOwner(existing.getSupplierProfileId()))) {
-            throw AuthContext.forbidden();
-        }
+        auth.requireAdminOrOwner("SUPPLIER", existing.getSupplierProfileId());
         offerService.delete(id);
         return ResponseEntity.noContent().build();
     }
